@@ -24,19 +24,6 @@ Sentinel is a system of choreographed asynchronous agents that provides continuo
 
 3. **Architectural validation** — The synthesis agent evaluates whether each initiative is being built in conformance with its corresponding TDD and ADRs. When drift is detected, Sentinel flags the violation as a PR comment before merge.
 
-### Production Results (8 weeks)
-
-| Metric | Result |
-|--------|--------|
-| Commits processed | 2,400+ |
-| Initiatives identified | 47 |
-| Initiatives matched to TDDs/epics | 72% |
-| Architectural drift instances detected | 18 |
-| Drift true positive rate | 83% |
-| Avg time from commit to drift flag | 12 min |
-| Repositories monitored | 120+ |
-| Teams covered | 20 |
-
 ## Resources
 
 | Resource | Link |
@@ -88,41 +75,7 @@ Sentinel is a system of choreographed asynchronous agents that provides continuo
 
 ## Sentinel Skill
 
-The [`skill/`](skill/) directory contains the full source of the Claude Code skill that serves as the conversational interface for architects. This is the same skill demonstrated in the video — an architect loads it in Claude Code and queries development activity in natural language.
-
-### Workflows
-
-| Workflow | Example Query | Description |
-|----------|---------------|-------------|
-| Development Initiative Overview | "What are teams working on?" | Summarizes current initiatives across all repos, grouped by domain |
-| Quick Service Lookup | "What is commerce-ai working on?" | Focused activity view for a specific service |
-| Week-over-Week Comparison | "How does this week compare to last?" | Tracks development trend changes |
-| TDD Exploration | "Find TDDs by the Payments team" | Searches ~200 TDDs by team, service, technology, or date |
-| Design Coverage Analysis | "Which initiatives lack design docs?" | Identifies initiatives that may need TDDs |
-| Governance Evaluation | "Evaluate PR #10204 against ADR-014" | Assesses PRs across 10 dimensions, produces a compliance scorecard |
-| ADR Management | "Write an ADR for the Standard Schema decision" | Create, list, and review Architecture Decision Records |
-| Governance & Dev Rules | "What are the LangChain coding standards?" | Reference upstream coding standards and contributing guidelines |
-| Service History | "Show me the last 4 weeks for commerce-ai" | Track a single service's progress over multiple weeks |
-
-### Governance Documents
-
-The skill ships with a full set of governance reference documents used for evaluation:
-
-- **[Consolidated Architecture & Dev Rules](skill/references/governance/dev-rules/CONSOLIDATED_ARCHITECTURE_AND_DEV_RULES.md)** — Unified coding standards synthesized from all 6 LangChain repos (Python + TypeScript). Covers architecture, testing, security, CI/CD, and versioning.
-- **[ADR-014: Schema-Agnostic Validation](skill/references/governance/adrs/ADR-014-schema-agnostic-validation-for-llm-providers.md)** — The primary ADR used in the demo. Captures the decision to support Standard Schema validation across all LLM provider integrations, replacing Zod-only dependency.
-- **Contributing Guidelines** — Python and TypeScript contribution workflows, integration submission process, documentation standards.
-- **Versioning Policy** — Semantic versioning tiers, LTS designations, API stability guarantees.
-
-### Scripts
-
-The `scripts/` directory contains the data pipeline that feeds the skill:
-
-| Script | Purpose |
-|--------|---------|
-| `aggregate_feature_development.sh` | Fetches per-service PR summaries from S3, aggregates into a weekly development initiative report |
-| `fetch_feature_development_history.sh` | Downloads multi-week history for a single service to track progress over time |
-| `fetch_design_docs.sh` | Syncs the TDD index from Confluence, uses AWS Bedrock to extract structured metadata |
-| `fetch_design_requirements.sh` | Downloads the TDD policy document defining when design docs are required |
+The [`skill/`](skill/) directory contains the full source of the Claude Code skill that serves as the conversational interface for architects. This is the same skill demonstrated in the video — an architect loads it in Claude Code and queries development activity in natural language. See [`skill/SKILL.md`](skill/SKILL.md) for the complete skill definition including all 9 workflows and trigger patterns.
 
 ## Demo Dataset
 
@@ -150,15 +103,3 @@ The processed demo data (initiative summaries, feature development reports) is a
 - **Storage:** Amazon S3 (initiative summaries and validation results)
 - **Trigger:** GitHub Actions (per-commit webhook)
 
-## Citation
-
-```bibtex
-@inproceedings{milev2026sentinel,
-  title={Sentinel: Autonomous Architectural Governance Through Commit Intelligence Across Multi-Repository Systems},
-  author={Milev, Roberto and Kanagala, Uday},
-  booktitle={Proceedings of the 1st ACM Conference on AI and Agentic Systems (CAIS '26)},
-  year={2026},
-  address={San Francisco, CA, USA},
-  publisher={ACM}
-}
-```
