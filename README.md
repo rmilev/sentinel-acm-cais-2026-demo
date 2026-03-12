@@ -24,62 +24,18 @@ Sentinel is a system of choreographed asynchronous agents that provides continuo
 
 3. **Architectural validation** — The synthesis agent evaluates whether each initiative is being built in conformance with its corresponding TDD and ADRs. When drift is detected, Sentinel flags the violation as a PR comment before merge.
 
-## Resources
+## Demo Artifacts
 
-| Resource | Link |
-|----------|------|
-| Demo Video (YouTube) | [https://youtu.be/-XISve8X3so](https://youtu.be/-XISve8X3so) |
-| Demo Video (raw) | [video/sentinel-demo-final.mp4](video/sentinel-demo-final.mp4) |
-| Demo Data (S3) | [sentinal-features-summary](https://sentinal-features-summary.s3.us-west-1.amazonaws.com) |
-| Conference | [ACM CAIS 2026](https://www.caisconf.org/) |
+The demo runs against 6 open-source LangChain ecosystem repositories (~100 PRs over 30 days). Sentinel discovers ~80 development initiatives and evaluates them against architectural decisions. The primary demo initiative — **Standard Schema Support** (13+ PRs across 15+ provider packages by `@colifran`) — is validated against ADR-014.
 
-## Repository Structure
+| Artifact | Description |
+|----------|-------------|
+| [Sentinel skill](skill/) | Full source of the Claude Code skill — conversational interface for querying development activity ([SKILL.md](skill/SKILL.md)) |
+| [ADR-014](skill/references/governance/adrs/ADR-014-schema-agnostic-validation-for-llm-providers.md) | Architecture decision record used for drift validation in the demo |
+| [Governance rules](skill/references/governance/) | Dev rules, contributing guidelines, and versioning policy used for compliance checks |
+| [Feature summary sample](skill/references/feature-development-summaries/feature_development_summary_2026-03-09.md) | Example output of the synthesis agent |
 
-```
-├── README.md
-├── skill/                           # Sentinel Claude Code skill (full source)
-│   ├── SKILL.md                     # Skill definition — 9 workflows, trigger patterns
-│   ├── scripts/
-│   │   ├── aggregate_feature_development.sh   # Fetches & aggregates PR summaries from S3
-│   │   ├── fetch_design_docs.sh               # Syncs TDD index from Confluence via Bedrock
-│   │   ├── fetch_design_requirements.sh       # Downloads TDD policy document
-│   │   └── fetch_feature_development_history.sh  # Multi-week history for a single service
-│   └── references/
-│       ├── DESIGN_COVERAGE_ANALYSIS.md        # Coverage analysis methodology
-│       ├── governance/
-│       │   ├── dev-rules/
-│       │   │   ├── CONSOLIDATED_ARCHITECTURE_AND_DEV_RULES.md  # Unified standards doc
-│       │   │   ├── langchain-python-CLAUDE.md     # Python monorepo standards
-│       │   │   ├── langchainjs-AGENTS.md          # TypeScript ESLint rules & patterns
-│       │   │   └── langgraph-CLAUDE.md            # LangGraph monorepo standards
-│       │   ├── contributing/
-│       │   │   ├── contributing-overview-python.md
-│       │   │   ├── contributing-code-python.md
-│       │   │   ├── contributing-documentation.md
-│       │   │   ├── contributing-integrations-python.md
-│       │   │   ├── langchainjs-CONTRIBUTING.md
-│       │   │   └── langchainjs-INTEGRATIONS.md
-│       │   ├── versioning/
-│       │   │   └── versioning-policy.md           # Semantic versioning & API stability tiers
-│       │   └── adrs/
-│       │       └── ADR-014-schema-agnostic-validation-for-llm-providers.md
-│       └── feature-development-summaries/
-│           └── feature_development_summary_2026-03-09.md  # Sample output
-├── figures/                         # Architecture diagram
-│   └── sentinel-arch.png
-├── video/                           # Demo video (raw binary for archival)
-│   └── sentinel-demo-final.mp4
-└── data/                            # Public S3 bucket — demo dataset
-    └── https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/
-```
-
-## Sentinel Skill
-
-The [`skill/`](skill/) directory contains the full source of the Claude Code skill that serves as the conversational interface for architects. This is the same skill demonstrated in the video — an architect loads it in Claude Code and queries development activity in natural language. See [`skill/SKILL.md`](skill/SKILL.md) for the complete skill definition including all 9 workflows and trigger patterns.
-
-## Demo Dataset
-
-The demo in the video runs against 6 open-source LangChain ecosystem repositories:
+### Target Repositories
 
 | Repository | Language | Purpose |
 |-----------|----------|---------|
@@ -90,9 +46,9 @@ The demo in the video runs against 6 open-source LangChain ecosystem repositorie
 | `deepagents` | Python | AI coding agent built on LangGraph |
 | `deepagentsjs` | TypeScript | JS port of Deep Agents |
 
-From ~100 PRs over 30 days, Sentinel discovers ~80 development initiatives. The primary demo initiative — **Standard Schema Support** (13+ PRs across 15+ provider packages by `@colifran`) — is evaluated against ADR-014.
+### Feature Summaries (S3)
 
-The processed demo data (initiative summaries, feature development reports) is available in a public S3 bucket:
+Processed per-repository feature development reports generated by the synthesis agent:
 
 | Repository | Feature Summary Example |
 |-----------|----------------|
@@ -103,6 +59,14 @@ The processed demo data (initiative summaries, feature development reports) is a
 | `deepagents` | [deepagents.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/deepagents.txt) |
 | `deepagentsjs` | [deepagentsjs.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/deepagentsjs.txt) |
 
+## Resources
+
+| Resource | Link |
+|----------|------|
+| Demo Video (YouTube) | [https://youtu.be/-XISve8X3so](https://youtu.be/-XISve8X3so) |
+| Demo Video (raw) | [video/sentinel-demo-final.mp4](video/sentinel-demo-final.mp4) |
+| Conference | [ACM CAIS 2026](https://www.caisconf.org/) |
+
 ## Technology Stack
 
 - **Agent Framework:** [AWS Strands](https://github.com/strands-agents/sdk-python)
@@ -112,3 +76,15 @@ The processed demo data (initiative summaries, feature development reports) is a
 - **Storage:** Amazon S3 (initiative summaries and validation results)
 - **Trigger:** GitHub Actions (per-commit webhook)
 
+## Repository Structure
+
+```
+├── README.md
+├── skill/                              # Sentinel Claude Code skill (full source)
+│   ├── SKILL.md                        # Skill definition — 9 workflows, trigger patterns
+│   ├── scripts/                        # Data fetching and aggregation scripts
+│   └── references/                     # Governance docs, ADRs, dev rules, sample outputs
+├── figures/                            # Architecture diagram
+├── video/                              # Demo video (raw binary for archival)
+└── data/                               # See S3 links above
+```
