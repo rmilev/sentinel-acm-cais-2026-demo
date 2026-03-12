@@ -94,7 +94,7 @@ From ~100 PRs over 30 days, Sentinel discovers ~80 development initiatives. The 
 
 The processed demo data (initiative summaries, feature development reports) is available in a public S3 bucket:
 
-| Repository | Feature Summary |
+| Repository | Feature Summary Example |
 |-----------|----------------|
 | `langchain` | [langchain.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/langchain.txt) |
 | `langchainjs` | [langchainjs.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/langchainjs.txt) |
