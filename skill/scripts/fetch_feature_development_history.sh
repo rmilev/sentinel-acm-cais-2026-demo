@@ -7,7 +7,8 @@
 #   ./fetch_feature_development_history.sh ta-hotel-service 2  # Last 2 weeks of ta-hotel-service
 
 # Configuration
-BUCKET="features-summary-temp"
+BUCKET="sentinal-features-summary"
+REGION="us-west-1"
 
 # Auto-detect AWS profile usage
 # - In AgentCore/containers: Use IAM role (no profile needed)
@@ -16,11 +17,11 @@ if [ -n "$AWS_EXECUTION_ENV" ] || [ -n "$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI"
     # Running in container (ECS/Fargate/AgentCore) - use IAM role
     # AWS_EXECUTION_ENV is set in AgentCore
     PROFILE=""
-    AWS_PROFILE_FLAG=""
+    AWS_PROFILE_FLAG="--region $REGION"
 else
     # Local environment - always use sre-dev-AdministratorAccess profile
     PROFILE="sre-dev-AdministratorAccess"
-    AWS_PROFILE_FLAG="--profile $PROFILE"
+    AWS_PROFILE_FLAG="--profile $PROFILE --region $REGION"
 fi
 
 # Validate arguments

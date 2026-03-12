@@ -30,7 +30,7 @@ Sentinel is a system of choreographed asynchronous agents that provides continuo
 |----------|------|
 | Demo Video (YouTube) | [https://youtu.be/-XISve8X3so](https://youtu.be/-XISve8X3so) |
 | Demo Video (raw) | [video/sentinel-demo-final.mp4](video/sentinel-demo-final.mp4) |
-| Demo Data (S3) | *Link to follow* |
+| Demo Data (S3) | [sentinal-features-summary](https://sentinal-features-summary.s3.us-west-1.amazonaws.com) |
 | Conference | [ACM CAIS 2026](https://www.caisconf.org/) |
 
 ## Repository Structure
@@ -69,8 +69,8 @@ Sentinel is a system of choreographed asynchronous agents that provides continuo
 │   └── sentinel-arch.png
 ├── video/                           # Demo video (raw binary for archival)
 │   └── sentinel-demo-final.mp4
-└── data/                            # Public S3 bucket mirror — demo dataset
-    └── (link to follow)
+└── data/                            # Public S3 bucket — demo dataset
+    └── https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/
 ```
 
 ## Sentinel Skill
@@ -92,7 +92,16 @@ The demo in the video runs against 6 open-source LangChain ecosystem repositorie
 
 From ~100 PRs over 30 days, Sentinel discovers ~80 development initiatives. The primary demo initiative — **Standard Schema Support** (13+ PRs across 15+ provider packages by `@colifran`) — is evaluated against ADR-014.
 
-The processed demo data (initiative summaries, feature development reports) is available in a public S3 bucket: *link to follow*.
+The processed demo data (initiative summaries, feature development reports) is available in a public S3 bucket:
+
+| Repository | Feature Summary |
+|-----------|----------------|
+| `langchain` | [langchain.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/langchain.txt) |
+| `langchainjs` | [langchainjs.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/langchainjs.txt) |
+| `langgraph` | [langgraph.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/langgraph.txt) |
+| `langgraphjs` | [langgraphjs.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/langgraphjs.txt) |
+| `deepagents` | [deepagents.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/deepagents.txt) |
+| `deepagentsjs` | [deepagentsjs.txt](https://sentinal-features-summary.s3.us-west-1.amazonaws.com/2026-03-09/deepagentsjs.txt) |
 
 ## Technology Stack
 

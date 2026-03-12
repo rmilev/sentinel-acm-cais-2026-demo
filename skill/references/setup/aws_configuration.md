@@ -8,8 +8,8 @@ The skill requires two types of AWS access:
 
 ### 1. S3 Bucket Access (Feature Development Workflows)
 
-- **Bucket**: `features-summary-temp`
-- **Region**: `us-east-2`
+- **Bucket**: `sentinal-features-summary`
+- **Region**: `us-west-1`
 - **Profile**: Configure an AWS profile with S3 read access
 - **Required for**: `aggregate_feature_development.sh`, `fetch_feature_development_history.sh`
 
@@ -29,9 +29,9 @@ The skill requires two types of AWS access:
 aws configure list --profile <your-aws-profile>
 
 # Test S3 bucket access (feature development)
-aws s3 ls s3://features-summary-temp/ \
+aws s3 ls s3://sentinal-features-summary/ \
   --profile <your-aws-profile> \
-  --region us-east-2
+  --region us-west-1
 
 # Test AWS Bedrock access (TDD processing)
 aws bedrock list-inference-profiles \
@@ -47,7 +47,7 @@ If the profile doesn't exist, configure it:
 aws configure --profile <your-aws-profile>
 # Enter: AWS Access Key ID
 # Enter: AWS Secret Access Key
-# Default region: us-east-2
+# Default region: us-west-1
 # Default output format: json
 ```
 
@@ -56,8 +56,8 @@ aws configure --profile <your-aws-profile>
 The AWS account needs:
 
 1. **S3 Permissions**:
-   - `s3:ListBucket` on `features-summary-temp`
-   - `s3:GetObject` on `features-summary-temp/*`
+   - `s3:ListBucket` on `sentinal-features-summary`
+   - `s3:GetObject` on `sentinal-features-summary/*`
 
 2. **Bedrock Permissions**:
    - `bedrock:ListInferenceProfiles`
@@ -82,9 +82,9 @@ aws bedrock list-inference-profiles --region us-east-1
 **Error: "Access Denied" on S3**
 ```bash
 # Verify bucket access
-aws s3 ls s3://features-summary-temp/ \
+aws s3 ls s3://sentinal-features-summary/ \
   --profile <your-aws-profile> \
-  --region us-east-2
+  --region us-west-1
 
 # If access denied, request S3 read permissions from your infrastructure team
 ```
